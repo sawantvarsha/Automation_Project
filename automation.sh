@@ -18,27 +18,17 @@ echo "checked apache2 enabled or not"
  echo "checked apache 2 running or not"
  
 myname=varsha
-echo "initialize variable"
 timestamp=$(date '+%d%m%Y-%H%M%S')
-echo "timestamp"
 cd  /var/log/apache2/
-echo "cd"
 ls
-echo "ls"
 tar -cvf ${myname}-httpd-logs-${timestamp}.tar *.log
-echo "tar .log file"
 mv varsha-httpd-logs-07072022-*.tar /tmp 
-echo "move to tmp"
 sudo apt update
-echo "update pkg"
 sudo apt install awscli -y
-echo "install awscli"
 
 s3_bucket=upgrad-varsha
 
-aws s3 \
-cp /tmp/${myname}-httpd-logs-${timestamp}.tar \
-echo "cp tmp to root"
+aws s3 \cp /tmp/${myname}-httpd-logs-${timestamp}.tar \
 s3://${s3_bucket}/${myname}-httpd-logs-${timestamp}.tar
 echo "tar uploaded to s3"
 
